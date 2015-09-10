@@ -1,0 +1,63 @@
+<div style='margin:0,40px'>
+
+<div>
+    <div> My Tasks</div>
+    <div style="{{  'background-color:lightgreen'}}">
+    <table>
+        
+    {% if tasks_list %}
+    <tr><td width="400px">Task Name</td><td width="100px">Assigned to</td><td width="100px">Status</td></tr>
+    {% for task in tasks_list %}
+    <tr>
+            <td><a href="{% url 'scrum:detail' task.id %}">{{ task.name }} </a></td>
+            <td>{{task.assigned}}</td>
+            <td>{{task.status}}</td>
+
+    </tr>
+    {% endfor %}
+    {% else %}
+        <tr>
+            <td>No task to display</td>
+
+        </tr>
+
+    {% endif %}
+
+    </table>
+
+    </div>
+</div>
+<br/>
+<br/>
+
+<div>
+    <div> Sprint Tasks</div>
+    <div style="{{  'background-color:lightgrey'}}">
+    <table>
+        
+
+    {% if assigned_tasks_list %}
+    <tr><td width="400px">Task Name</td><td width="100px">Assigned to</td><td width="100px">Status</td></tr>
+    {% for task in assigned_tasks_list %}
+    <tr>
+            <td><a href="{% url 'scrum:detail' task.id %}">{{ task.name }} </a></td>
+            <td>{% if task.assigned %}{{task.assigned.username}} {% else %} not assigned {% endif %}</td>
+            <td>{{task.status}}</td>
+
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+            <td>No task to display</td>
+
+    </tr>
+    {% endif %}
+
+
+    
+    </table> 
+
+    </div>
+</div>
+</div>
+

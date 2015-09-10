@@ -1,0 +1,41 @@
+<h1>{{ task.name }}  </h1>
+<p>{{ task.description }}</p>
+
+<br/>
+{% if task.assigned  %}
+
+{% if user.username == task.assigned.username %}
+<p><Strong> Would you to change the status of the task? </strong>
+<form action="{% url 'scrum:status' task.id  %}" method="post">
+    {% csrf_token %}
+
+    <select name="status_id">
+    {% for id, desc in status_list %}
+        {% if id == task.status %}
+            <option value="{{id}}" selected="selected">{{desc}}</option>
+        {% else %}
+            <option value="{{id}}">{{desc}}</option>
+        {% endif %}
+    {% endfor %}
+</select>
+    <input type="submit" value="Ok" />
+
+</form>
+</p>
+{% else %}
+
+    <p><Strong> You are viewing task that is already assigned to another user  </strong></p>
+{% endif %}
+
+{% else %} 
+<p><Strong> Task is not yet assigned ! Would you like this to be assigned to you? </strong>
+<form action="{% url 'scrum:assign' task.id %}" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Yes! Assign Me!" />
+
+</form>
+ </p>
+{% endif %}
+
+<a href="{% url 'scrum:index'%}">View Tasks </a>
